@@ -99,6 +99,8 @@ npm install
 
 预测相关数据集使用的是 OhioT1DM 数据集。
 
+更完整的第三方说明见 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)。
+
 ## 许可
 
 本项目采用 MIT License，详见 [LICENSE](./LICENSE)。

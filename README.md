@@ -99,6 +99,8 @@ The glucose prediction part of this project was developed with reference to [r-c
 
 The dataset used for the prediction workflow is the OhioT1DM dataset.
 
+For a clearer attribution note, see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
+
 ## License
 
 This project is released under the MIT License. See [LICENSE](./LICENSE).
