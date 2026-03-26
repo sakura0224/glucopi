@@ -1,0 +1,63 @@
+<!-- pages/chat/index.wxml -->
+
+<t-navbar class="nav-bar" title="{{ name }}" left-arrow />
+
+<view class="chat-container">
+  <scroll-view class="content" scroll-y scroll-into-view="{{ anchor }}">
+    <view class="messages">
+      <block wx:for="{{messages}}" wx:key="_id" wx:for-item="item" wx:for-index="idx">
+        <!-- 时间标签 -->
+        <view wx:if="{{ idx === 0 || item.timestamp - messages[idx-1].timestamp > 120000 }}" class="time">
+          {{ item.displayTime }}
+        </view>
+
+        <!-- 1. loading 占位 -->
+        <view wx:if="{{ item.isLoading }}" class="message-area other-area">
+          <t-avatar image="{{ avatar }}" size="small" />
+          <view class="message other loading">
+            <t-loading theme="circular" size="40rpx" text="正在思考" />
+          </view>
+        </view>
+
+        <!-- 2. 自己的消息 -->
+        <view wx:elif="{{ item.from === myId }}" class="message-area self-area">
+          <view class="message self">
+            <text space="nbsp">{{ item.content }}</text>
+          </view>
+          <t-avatar image="{{ myAvatar }}" size="small" />
+        </view>
+
+        <!-- 3. LLM 正式回复 -->
+        <view wx:elif="{{ item.isLLM }}" class="message-area other-area">
+          <t-avatar image="{{ avatar }}" size="small" />
+          <view class="message other">
+            <!-- 用时，只在该消息带有 duration 时渲染 -->
+            <text wx:if="{{ item.duration }}" class="duration">
+              用时 {{ item.duration }} 秒
+            </text>
+            <!-- Markdown 渲染 -->
+            <towxml nodes="{{ item.renderedContent }}" />
+          </view>
+        </view>
+
+        <!-- 4. 普通对方消息 -->
+        <view wx:elif="{{ !item.isLLM }}" class="message-area other-area">
+          <t-avatar image="{{ avatar }}" size="small" />
+          <view class="message other">
+            <text space="nbsp">{{ item.content }}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view id="bottom" />
+  </scroll-view>
+</view>
+
+<view class="block" style="margin-bottom: {{ keyboardHeight }}px" />
+<view class="bottom" style="margin-bottom: {{ keyboardHeight }}px">
+  <view class="input">
+    <input value="{{ input }}" type="text" confirm-type="send" placeholder="请输入" placeholder-style="color: #00000066" adjust-position="{{ false }}" hold-keyboard confirm-hold bindkeyboardheightchange="handleKeyboardHeightChange" bindblur="handleBlur" bindinput="handleInput" bindconfirm="sendMessage" />
+  </view>
+  <t-button class="send" theme="primary" shape="round" disabled="{{ !input }}" bind:tap="sendMessage">发送</t-button>
+</view>

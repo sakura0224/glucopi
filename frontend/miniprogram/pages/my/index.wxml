@@ -1,0 +1,58 @@
+<t-toast id="t-toast" />
+
+<view class="my">
+  <image class="nav-bg" src="https://cdn.ayane.top/bg_navbar.png" />
+  <t-navbar t-class-placeholder="t-navbar-placeholder" t-class-content="t-navbar-content" title="我的" t-class-title="nav-title" />
+  <view class="my-info">
+    <t-cell-group>
+      <!-- 登录后显示 -->
+      <t-cell wx:if="{{isLoad}}" bordered="{{false}}">
+        <t-avatar image="{{personalInfo.avatar_url || 'https://cdn.ayane.top/avatar/default.png'}}" slot="left-icon" size="large" />
+        <view class="my-info__person" slot="description">
+          <view class="name">{{personalInfo.nickname || '微信用户'}}</view>
+          <view class="tags">
+            <t-tag class="tag" variant="light" icon="{{displayGender}}"></t-tag>
+            <t-tag class="tag" variant="light" icon="calendar">{{displayAge}}岁</t-tag>
+          </view>
+        </view>
+        <t-icon slot="right-icon" name="edit" size="40rpx" color="#000000e6" bindtap="onNavigateTo" />
+      </t-cell>
+      <!-- 登录前, 快捷登录checkAccount, 调试可使用直接跳转onLogin -->
+      <t-cell wx:if="{{!isLoad}}" title="请先登录/注册" bordered="{{false}}" t-class-title="cell-class-title" t-class-center="cell-class-center" bindclick="checkAccount" data-key="showAutoLogin">
+        <t-avatar slot="left-icon" icon="user" size="128rpx" />
+      </t-cell>
+    </t-cell-group>
+  </view>
+
+  <!-- 功能 -->
+  <t-cell-group theme="card" style="margin: 32rpx;padding-bottom: 8rpx;">
+    <t-cell wx:if="{{role === 'patient'}}" title="健康档案" leftIcon="task-1" hover arrow bindclick="toArchive" />
+    <t-cell wx:if="{{role === 'doctor'}}" title="个人档案" leftIcon="catalog" hover arrow bindclick="toArchive" />
+  </t-cell-group>
+
+  <!-- 设置 -->
+  <t-cell-group theme="card" style="margin: 32rpx;padding-bottom: 8rpx;">
+    <t-cell wx:for="{{settingList}}" wx:for-item="item" wx:key="type" title="{{item.name}}" url="{{item.url}}" leftIcon="{{item.icon}}" hover arrow data-data="{{item}}" bindclick="onEleClick" />
+  </t-cell-group>
+
+  <!-- 账号切换 -->
+  <t-cell-group theme="card" wx:if="{{isLoad}}">
+    <t-cell title="切换账号" leftIcon="usergroup" hover arrow bindclick="onLogin" />
+    <t-cell title="登出" leftIcon="logout" hover arrow bindclick="showDialog" data-key="showConfirm" />
+  </t-cell-group>
+
+  <t-footer text="{{copyright}}" style="margin-top: 32rpx;"></t-footer>
+
+  <!-- 账号切换弹窗 -->
+  <t-dialog visible="{{showConfirm}}" title="警告" content="是否退出账号？" confirm-btn="{{ confirmBtn }}" cancel-btn="取消" bind:confirm="changeAccount" bind:cancel="closeDialog" />
+
+  <!-- 快捷登录弹窗 -->
+  <t-dialog visible="{{showAutoLogin}}" title="快捷登录" content="检测到您已有账号，是否直接登录？" confirm-btn="{{ confirmBtn }}" cancel-btn="取消" bind:confirm="autoLogin" bind:cancel="cancelAutoLogin" />
+
+  <!-- 加载动画和遮罩 -->
+  <view wx:if="{{loading}}" class="loading-fullscreen">
+    <t-loading theme="circular" size="60rpx" />
+  </view>
+
+  <t-overlay visible="{{loading}}" duration="{{500}}" />
+</view>

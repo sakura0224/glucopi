@@ -1,0 +1,66 @@
+.container {
+  padding: 0;
+}
+
+.search-bar {
+  padding: 20rpx;
+  background-color: #fff;
+  /* 搜索框背景 */
+}
+
+.search-results {
+  padding: 0;
+  /* t-cell 自身有内边距 */
+}
+
+.status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  /* 保证搜索结果区域至少有一定高度 */
+  text-align: center;
+  padding: 20px;
+  color: #888;
+  font-size: 28rpx;
+}
+
+.doctor-avatar {
+  width: 80rpx;
+  /* 根据实际需要调整头像大小 */
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+
+.doctor-info {
+  flex: 1;
+  /* 占据中间区域 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.doctor-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 4rpx;
+}
+
+.doctor-detail {
+  font-size: 24rpx;
+  color: #888;
+  /* 保持在一行显示，溢出省略 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400rpx;
+  /* 限制宽度避免挤压右侧按钮 */
+}
+
+.bind-action {
+  margin-left: 20rpx;
+  display: flex;
+  /* 使按钮垂直居中 */
+  align-items: center;
+}

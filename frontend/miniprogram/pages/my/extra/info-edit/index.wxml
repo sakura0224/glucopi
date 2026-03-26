@@ -1,0 +1,26 @@
+<t-navbar left-arrow title="个人信息" />
+<view class="info-edit">
+  <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+    <image class="avatar-image" src="{{personInfo.avatar_url || 'https://cdn.ayane.top/avatar/default.png'}}" />
+  </button>
+  <t-cell class="info-edit__cell" title="用户名">
+    <t-input type="nickname" bind:change="onNameChange" borderless placeholder="请输入用户名" slot="note" value="{{personInfo.nickname || ''}}" />
+  </t-cell>
+  <t-cell class="info-edit__cell" title="性别">
+    <t-radio-group bind:change="onGenderChange" borderless defaultValue="{{personInfo.gender}}" options="{{genderOptions}}" slot="note" t-class="info-edit__gender" value="{{personInfo.gender}}" />
+  </t-cell>
+  <t-cell arrow bind:click="showPicker" data-mode="birth" note="{{personInfo.birthday || ''}}" title="生日" />
+</view>
+
+<view class="info-edit__save">
+  <t-button bind:tap="onSaveInfo" block size="medium" theme="primary">保存</t-button>
+</view>
+
+<!-- 加载动画和遮罩 -->
+<view wx:if="{{isLoading}}" class="loading-fullscreen">
+  <t-loading theme="circular" size="60rpx" />
+</view>
+
+<t-overlay visible="{{isLoading}}" duration="{{500}}" />
+
+<t-date-time-picker auto-close bind:cancel="hidePicker" bind:change="onPickerChange" cancelBtn="取消" confirmBtn="确认" data-mode="birth" defaultValue="{{personInfo.birthday}}" end="{{birthEnd}}" filter="{{birthFilter}}" format="YYYY-MM-DD" mode="date" popup-props="{{ { usingCustomNavbar: true } }}" start="{{birthStart}}" title="选择生日" value="{{personInfo.birthday}}" visible="{{birthVisible}}" />

@@ -1,0 +1,141 @@
+<view class="captcha4_component">
+  <view wx:if="{{!btnLoading && btnShow}}" class="captcha4_captcha captcha4_customTheme captcha4_{{css_status}}">
+    <view class="captcha4_holder" bindtap='clickButton' style='width:{{styleConfig.btnWidth}};height:{{styleConfig.btnHeight}}'>
+      <view class="captcha4_btn_click"></view>
+      <view class="captcha4_mask">
+        <view class="captcha4_mask_layer"></view>
+      </view>
+      <view class="captcha4_content">
+        <view class="captcha4_gradient_bar" style="background-color:{{customTheme._color}}"></view>
+        <view class="captcha4_tip_container {{logoShow ? '': 'captcha4_container_center'}}">
+          <view class="captcha4_tips_wrap">
+            <view class="captcha4_err_tips">{{err_tips}}</view>
+            <view class="captcha4_tip" catchtap='btnErrToReset'>{{btn_tips}}</view>
+          </view>
+        </view>
+        <view class="captcha4_err_code">{{err_code}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{isBoxShow}}" class="captcha4_popup_wrap captcha4_popup captcha4_customTheme  captcha4_{{css_status ? css_status : ''}}">
+    <view class="captcha4_popup_ghost" style="background-color:{{mask.bgColor}}" catchtap='hidePopup'></view>
+    <view class="captcha4_box_wrap" style='width:{{scale*340}}px;max-width:{{scale*340}}px;'>
+      <view wx:if="{{!showBind}}" class="captcha4_box captcha4_{{fail_shake}}">
+        <view class="captcha4_header">
+          <view class="captcha4_title captcha4_{{subwrap_css_animate}} {{text_layout ? 'captcha4_space_between' : ''}}">
+            <view class="captcha4_text_tips">{{common_tips}}</view>
+            <view class="captcha4_ques_tips">
+              <image wx:key="index" class="captcha4_img" wx:for="{{ans_imgs}}" src="{{item.src}}" alt=""></image>
+            </view>
+          </view>
+          <view class="captcha4_status_bar" style="background-color:{{customTheme._color}}"></view>
+        </view>
+        <view class="captcha4_container">
+          <view class="captcha4_wrap">
+            <view wx:if="{{options.captchaType === 'match'}}" class="captcha4_subitem captcha4_match captcha4_{{subwrap_css_animate}} {{freeze ? 'captcha4_freeze_action': ''}}" bindtap="subWrapClick">
+              <view wx:for="{{matchListBg}}" wx:key="index" wx:if="{{matchListBg.length > 0}}" class="captcha4_item-{{item.class}}-bg captcha4_backgd" style="left: {{item.left}}; top: {{item.top}};"></view>
+              <view wx:for="{{matchList}}" wx:key="index" class="captcha4_item-{{item.class}} captcha4_backimg {{ item.active ? 'captcha4_active' : '' }}  {{item.css_animate}} " style="left: {{item.left}}; top: {{item.top}};" data-id="{{item.dataId}}" data-index="{{item.index}}">
+                <view class="captcha4_boom-{{item.class}} {{item.boom}}"></view>
+                <view class="captcha4_img-{{item.index}} captcha4_item_{{item.type}}" style="background-image:{{item.bg}}"></view>
+              </view>
+              <view class="captcha4_result_tips {{result_animate}}">{{result_tips}}</view>
+            </view>
+            <view wx:if="{{options.captchaType === 'slide'}}" class="captcha4_subitem captcha4_slide captcha4_{{subwrap_css_animate}} {{slide_move ? 'captcha4_btn_move' : ''}} {{freeze ? 'captcha4_freeze_action': ''}}">
+              <view class="captcha4_window">
+                <view wx:if="{{slide.slice_bg}}" class="captcha4_slice" style="width: {{scale*slide.slice.width}}px; height: {{scale*slide.slice.height}}px; top: {{scale*slide.slice.top}}px;transform: translate({{translateX}}px, 0px);" catchtouchstart="slideButtonTouchStart" catchtouchmove="slideButtonTouchMove" catchtouchend="slideButtonTouchEnd">
+                  <view class="captcha4_slice_bg" style="{{slide.slice_bg}}"></view>
+                  <view class="captcha4_slice_animate"></view>
+                </view>
+                <view class="captcha4_bg" style="{{slide.bg}}"></view>
+                <view class="captcha4_result_tips {{result_animate}}">{{result_tips}}</view>
+              </view>
+              <view wx:if="{{slide.slice_bg}}" class="captcha4_slider">
+                <view class="captcha4_track">
+                  <view class="captcha4_process"></view>
+                  <view class="captcha4_track_tips"></view>
+                  <view id="captcha4_slide_btn" class="captcha4_btn" style="transform: translate({{translateX}}px, 0px);background-image:{{customTheme._gradient}};background-color:{{customTheme._color}}" catchtouchstart="slideButtonTouchStart" catchtouchmove="slideButtonTouchMove" catchtouchend="slideButtonTouchEnd">
+                    <view class="captcha4_arrow captcha4_arrow_1"></view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view wx:if="{{options.captchaType === 'word' || options.captchaType === 'icon' || options.captchaType === 'phrase'}}" class="captcha4_subitem captcha4_click captcha4_{{subwrap_css_animate}} {{freeze ? 'captcha4_freeze_action': ''}}">
+              <view class="captcha4_window">
+                <view wx:if="{{click.bg}}" class="captcha4_bg" id="img-infos" style="{{click.bg}}" catchtap='addMarks'>
+                  <view wx:if="{{marks.length > 0}}" wx:for="{{marks}}" class="captcha4_square_mark captcha4_mark_show" style="{{item.style}};background-color:{{styleConfig.color}};" wx:key="index" catchtap="remove" data-index="{{index}}">
+                    <view class="captcha4_mark_no">{{index+1}}</view>
+                  </view>
+                </view>
+                <view class="captcha4_result_tips {{result_animate}}">{{result_tips}}</view>
+              </view>
+              <view wx:if="{{click.bg}}" class="captcha4_submit {{disableSumitBtn ? 'captcha4_disable' : ''}}" style="background-image:{{customTheme._gradient}};background-color:{{customTheme._color}}" catchtap='validateBtn'>
+                <view class="captcha4_submit_tips">{{confirm}}</view>
+              </view>
+            </view>
+            <view wx:if="{{options.captchaType === 'nine'}}" class="captcha4_subitem captcha4_nine captcha4_{{subwrap_css_animate}}">
+              <view class="captcha4_window {{freeze ? 'captcha4_freeze_action': ''}}">
+                <view wx:for="{{nine}}" class="captcha4_{{item.index}} captcha4_item" wx:key='{{item.index}}' data-index="{{item.index}}" data-id="{{item.dataId}}" catchtap='addNineMarks'>
+                  <view class="captcha4_item_wrap">
+                    <view class="captcha4_imgs{{item.index}} captcha4_item_img" style="background-image: {{item.bgImage}}; background-position: {{item.bgPosition}};"></view>
+                  </view>
+                  <view class="captcha4_ghost_{{item.index}} captcha4_item_ghost {{item.isSelected ? 'captcha4_selected' : ''}}">
+                    <view class="captcha4_item_icon"></view>
+                  </view>
+                </view>
+                <view class="captcha4_result_tips {{result_animate}}">{{result_tips}}</view>
+              </view>
+            </view>
+            <view wx:if="{{options.captchaType === 'winlinze'}}" class="captcha4_subitem captcha4_winlinze {{freeze ? 'captcha4_freeze_action': ''}} captcha4_{{subwrap_css_animate}} {{showEmpty ? 'captcha4_showEmpty' : ''}}  ">
+              <view class="captcha4_item-{{index}} captcha4_item" wx:if="{{winlinze.length > 0}}" wx:for="{{winlinze}}" wx:key='{{item.index}}'>
+                <view wx:for="{{item}}" wx:for-item='sitem' wx:for-index='sindex' class="captcha4_item-{{sitem.index[0]}}-{{sitem.index[1]}}-bg captcha4_itembg captcha4_view" style="left: {{sitem.left_bg}}; top: {{sitem.top_bg}};"></view>
+                <view wx:for="{{item}}" wx:for-item='sitem' wx:for-index='sindex' class="captcha4_item-{{sitem.index[0]}}-{{sitem.index[1]}} captcha4_itemimg {{ sitem.isEmpty ? 'captcha4_isEmpty': ''}} {{sitem.active ? 'captcha4_active' : ''}} {{sitem.animate}} captcha4_view" style="{{sitem.bgImage}}; left:{{sitem.left}}; top:{{sitem.top}};" catchtap="winlinzeClick" data-id="{{sitem.index}}" data-type="{{sitem.type}}"></view>
+              </view>
+              <view class="captcha4_result_tips {{result_animate}}">{{result_tips}}</view>
+            </view>
+            <view wx:if="{{options.captchaType === 'pencil'}}" class="captcha4_subitem captcha4_pencil captcha4_{{subwrap_css_animate}} {{freeze ? 'captcha4_freeze_action': ''}}">
+              <canvas class="captcha4_bg " height="260" width="300" canvas-id="captcha4_canvas" catchtouchstart="pencilTouchStart" catchtouchmove="pencilTouchMove" catchtouchend="pencilTouchEnd"></canvas>
+              <view class="captcha4_result_tips {{result_animate}}">{{result_tips}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="captcha4_footer">
+          <view class="captcha4_footer_left">
+            <view class="captcha4_close" bindtap="btnToHidePopup" wx:if="{{closeShow}}">
+              <view class="captcha4_close_tips captcha4_small_tip">关闭验证</view>
+            </view>
+            <view class="captcha4_refresh" bindtap="btnToRefresh" wx:if="{{refreshShow}}">
+              <view class="captcha4_refresh_tips captcha4_small_tip">刷新验证</view>
+            </view>
+          </view>
+          <view class="captcha4_footer_right">
+            <view wx:if="{{passCount}}" class="captcha4_progress">{{passCount}}</view>
+          </view>
+        </view>
+        <view class="captcha4_ai_detect"></view>
+        <view class="captcha4_ai_grid"></view>
+      </view>
+      <view wx:if="{{showBind}}" class="captcha4_bind_box">
+        <view class="captcha4_bind_status_bar"></view>
+        <view class="captcha4_bind_container">
+          <view class="captcha4_bind_success_box">
+            <view class="captcha4_success_show">
+              <view class="captcha4_success_pie"></view>
+              <view class="captcha4_success_filter"></view>
+              <view class="captcha4_success_mask"></view>
+            </view>
+            <view class="captcha4_success_correct">
+              <view class="captcha4_success_icon"></view>
+            </view>
+          </view>
+          <view class="captcha4_bind_icon"></view>
+          <view class="captcha4_bind_err_icon"></view>
+          <view class="captcha4_bind_user_tips"></view>
+          <view class="captcha4_bind_tips">{{bind_tips}}</view>
+        </view>
+        <view class="captcha4_bind_err_code"></view>
+      </view>
+    </view>
+  </view>
+  <image wx:for="{{ imgLoadList }}" wx:key="*this" src="{{ item }}" data-src="{{ item }}" bindload="imgLoad" binderror="imgFail" style="width:0;height:0;opacity:0;display:none" />
+</view>

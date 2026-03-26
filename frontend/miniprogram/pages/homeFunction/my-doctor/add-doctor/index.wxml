@@ -1,0 +1,53 @@
+<t-toast id="t-toast" />
+<view class="container">
+  <t-navbar t-class-placeholder="t-navbar-placeholder" t-class-content="t-navbar-content" title="添加医生" t-class-title="nav-title" left-arrow />
+
+  <!-- 搜索框 -->
+  <view class="search-bar">
+    <t-search placeholder="请输入医生姓名或医院科室" value="{{ searchKeyword }}" bindchange="handleKeywordChange" bindsubmit="handleSearch" clearable="{{true}}" focus="{{true}}" />
+  </view>
+
+  <!-- 搜索结果区域 -->
+  <view class="search-results">
+    <!-- 搜索中状态 -->
+    <block wx:if="{{ isSearching }}">
+      <view class="status-container">
+        <t-loading theme="dots" text="搜索中..." layout="vertical" size="64rpx"></t-loading>
+      </view>
+    </block>
+
+    <!-- 搜索无结果状态 -->
+    <block wx:elif="{{ searched && searchResults.length === 0 }}">
+      <view class="status-container">
+        <t-result theme="error" title="未找到相关医生" />
+      </view>
+    </block>
+
+    <!-- 搜索结果列表 -->
+    <block wx:elif="{{ searchResults.length > 0 }}">
+      <t-cell wx:for="{{ searchResults }}" wx:key="id" hover="false" data-doctor="{{ item }}">
+        <view slot="left-icon" class="doctor-avatar">
+          <t-avatar shape="round" image="{{ item.avatar_url || '/static/chat/avatar-Kingdom.png' }}" />
+        </view>
+        <view slot="title" class="doctor-name">{{ item.nickname }}</view> <!-- 使用后端返回的 nickname -->
+        <view slot="description" class="doctor-detail">{{ item.title }} | {{ item.department }} | {{ item.hospital }}</view>
+        <view slot="right-icon" class="bind-action">
+          <t-button size="small" data-doctor-id="{{ item.id }}" bindtap="handleRequestBinding" disabled="{{ item.isBinding || item.binding_status === 'pending' || item.binding_status === 'accepted' }}" loading="{{ item.isBinding }}">
+            {{ item.buttonText }}
+          </t-button>
+        </view>
+      </t-cell>
+    </block>
+
+    <!-- 初始状态或错误状态，可以显示默认提示 -->
+    <block wx:else>
+      <view class="status-container">
+        <t-empty icon="info-circle-filled" description="{{ searched ? errorMsg || '请输入关键词搜索医生' : '请输入关键词搜索医生' }}" />
+        <!-- 如果有错误信息，显示重试按钮 -->
+        <t-button wx:if="{{ errorMsg }}" size="small" bindtap="handleSearch">重试</t-button>
+      </view>
+    </block>
+
+  </view>
+
+</view>

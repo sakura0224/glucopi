@@ -1,0 +1,57 @@
+<!-- pages/doctor/patients/index.wxml -->
+<view class="container">
+  <t-toast id="t-toast" />
+
+  <!-- 标题栏 -->
+  <t-navbar title="我的患者" />
+
+  <!-- 加载中 -->
+  <block wx:if="{{ isLoading }}">
+    <view class="status-container">
+      <t-loading theme="dots" text="加载中..." layout="vertical" size="64rpx" />
+    </view>
+  </block>
+
+  <!-- 空状态 -->
+  <block wx:elif="{{ !isLoading && patientList.length === 0 }}">
+    <view class="status-container">
+      <t-result theme="warning" title="暂无患者申请或绑定" />
+    </view>
+  </block>
+
+  <!-- 列表 -->
+  <block wx:else>
+    <scroll-view scroll-y class="list">
+      <block wx:for="{{ patientList }}" wx:key="binding_id" wx:for-item="item">
+        <t-swipe-cell>
+          <!-- 主体内容 -->
+          <t-cell hover="false" bindtap="onCellTap" data-patient="{{ item }}" data-binding-id="{{ item.binding_id }}">
+            <!-- 左侧头像 -->
+            <view slot="left-icon" class="avatar-wrap">
+              <t-avatar shape="round" size="medium" image="{{ item.avatar_url || 'https://cdn.ayane.top/avatar/default.png' }}" />
+            </view>
+
+            <!-- 标题：姓名 -->
+            <view slot="title" class="name">{{ item.nickname || '微信用户' }}</view>
+
+            <!-- 描述：最近血糖 -->
+            <view slot="description" class="desc">
+              {{ item.recent_glucose ? '最近血糖：' + item.recent_glucose : '' }}
+            </view>
+
+            <!-- 右侧操作（接受／聊天） -->
+            <view slot="right-icon" class="action-wrap">
+              <t-button wx:if="{{ item.status === 'pending' }}" size="small" catch:tap="acceptInvitation" data-binding-id="{{ item.binding_id }}">接受</t-button>
+              <t-icon wx:elif="{{ item.status === 'accepted' }}" size="40rpx" name="chat" catch:tap="startChat" data-patient-id="{{ item.id }}" style="margin-left: 20rpx; color: #0052d9; display: flex; align-items: center;" />
+            </view>
+          </t-cell>
+
+          <!-- 滑出右侧按钮 -->
+          <view wx:if="{{item.status === 'pending'}}" slot="right" class="btn delete-btn" catch:tap="rejectInvitation" data-binding-id="{{ item.binding_id }}">拒绝</view>
+          <view wx:elif="{{item.status === 'accepted'}}" slot="right" class="btn delete-btn" catch:tap="deactivateBinding" data-binding-id="{{ item.binding_id }}">解除</view>
+        </t-swipe-cell>
+      </block>
+    </scroll-view>
+  </block>
+  <t-action-sheet id="t-action-sheet" usingCustomNavbar bind:selected="handleSelected" />
+</view>

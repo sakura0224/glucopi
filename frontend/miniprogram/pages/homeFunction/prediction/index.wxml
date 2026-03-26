@@ -1,0 +1,34 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <t-navbar title="血糖预测" left-arrow />
+
+  <!-- 免责声明 -->
+  <view wx:if="{{ showDisclaimer }}" class="card disclaimer">
+    <t-notice-bar theme="warning" visible="{{ showDisclaimer }}" marquee="{{marquee}}" suffixIcon="close" bind:click="onCloseDisclaimer" content="{{content}}">
+    </t-notice-bar>
+  </view>
+
+  <!-- 选择预测区间 -->
+  <view class="card section">
+    <view class="section-title">请选择预测时间</view>
+    <t-radio-group value="{{ selected }}" layout="vertical" bind:change="onIntervalChange">
+      <t-radio value="30">30 分钟后</t-radio>
+      <t-radio value="60">60 分钟后</t-radio>
+    </t-radio-group>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions" style="margin-top:32rpx;">
+    <t-button theme="primary" shape="round" loading="{{ isLoading }}" disabled="{{ !selected || isLoading }}" bind:tap="onPredict">
+      开始预测
+    </t-button>
+  </view>
+
+  <!-- 结果展示 -->
+  <view wx:if="{{ predictionResult }}" class="card result-card">
+    <view class="section-title">预测结果（{{ selected }} 分钟后）</view>
+    <view class="value">血糖：{{ convertedGlucose }} mmol/L</view>
+    <view class="note">历史有效血糖点数：{{ predictionResult.historical_valid_glucose_points }}</view>
+    <!-- 这里展示你返回的其它字段 -->
+  </view>
+</view>

@@ -1,0 +1,137 @@
+/* pages/chat/index.wxss */
+
+/* 容器与布局 */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100vh;
+  font-size: 32rpx;
+  background-color: #fff;
+}
+
+.nav-bar {
+  border-bottom: 1rpx solid #e7e7e7;
+}
+
+.content {
+  height: 0;
+  flex-grow: 1;
+}
+
+/* 消息列表 */
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+  padding: 32rpx 24rpx;
+}
+
+.time {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 56rpx;
+  color: #00000066;
+  font-size: 24rpx;
+  line-height: 40rpx;
+}
+
+/* 每条消息行 */
+.message-area {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+
+/* loading 专用的消息行 */
+.loading-area {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin: 16rpx 0;
+}
+
+/* 普通气泡基类 */
+.message {
+  position: relative;
+  box-sizing: border-box;
+  max-width: 530rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  line-height: 44rpx;
+}
+
+/* 自己的消息 */
+.message.self {
+  border-radius: 24rpx 0 24rpx 24rpx;
+  margin-left: auto;
+  background-color: #d9e1ff;
+}
+
+/* 对方消息 */
+.message.other {
+  border-radius: 0 24rpx 24rpx 24rpx;
+  background-color: #f3f3f3;
+}
+
+/* 正在思考的 loading 气泡 */
+.loading {
+  /* 取消绝对定位，变成普通气泡 */
+  position: static !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+
+  /* 样式类似对方消息，但稍微紧凑一些 */
+  border-radius: 0 24rpx 24rpx 24rpx;
+  background-color: #f3f3f3;
+  padding: 16rpx 24rpx;
+  max-width: 300rpx;
+  font-size: 24rpx;
+  line-height: 32rpx;
+}
+
+/* 底部安全区填充 */
+.block {
+  height: calc(env(safe-area-inset-bottom) + 129rpx);
+}
+
+/* 底部输入区 */
+.bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24rpx;
+  padding: 24rpx 24rpx calc(env(safe-area-inset-bottom) + 24rpx);
+  border-top: 1rpx solid #e7e7e7;
+  background-color: #ffffff;
+}
+
+.input {
+  box-sizing: border-box;
+  flex-grow: 1;
+  height: 80rpx;
+  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  border: 1rpx solid #dcdcdc;
+  background: #f3f3f3;
+  line-height: 48rpx;
+}
+
+.input > input {
+  width: 100%;
+  height: 48rpx;
+  line-height: 48rpx;
+  margin-bottom: 40rpx;
+}
+
+.send {
+  width: 128rpx !important;
+  margin: 0;
+  font-weight: normal !important;
+}

@@ -1,0 +1,4 @@
+<!-- /pages/home/index.wxml -->
+
+<doctor-home wx:if="{{role==='doctor'}}" id="doctorHome" />
+<patient-home wx:else id="patientHome" />

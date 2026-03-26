@@ -1,0 +1,60 @@
+<view class="page">
+  <view class="fixed-header">
+    <t-navbar t-class-placeholder="t-navbar-placeholder" t-class-content="t-navbar-content" title="每日记录" t-class-title="nav-title" left-arrow />
+    
+    <!-- Tabs: value 绑定到 activeTab，bind:change 触发 onTabsChange -->
+    <t-tabs value="{{activeTab}}" bind:change="onTabsChange" bind:click="onTabsClick" t-class="custom-tabs">
+      <t-tab-panel icon="fingerprint" label="血糖" value="{{0}}" />
+      <t-tab-panel icon="trending-down" label="胰岛素" value="{{1}}" /> <!-- 建议换个胰岛素图标 -->
+      <t-tab-panel icon="apple" label="饮食" value="{{2}}" />
+    </t-tabs>
+    <!-- 下拉筛选/排序菜单: options 和 value 动态绑定到当前激活 tab 的配置和状态 -->
+    <t-dropdown-menu>
+      <t-dropdown-item
+        options="{{tabsConfig[activeTab].filters.options}}"
+        value="{{tabsDataState[activeTab].filterValue}}"
+        bindchange="onFilterChange"
+      />
+      <t-dropdown-item
+        options="{{tabsConfig[activeTab].sorters.options}}"
+        value="{{tabsDataState[activeTab].sorterValue}}"
+        bindchange="onSortChange"
+      />
+      <!-- default-value 在这里可能不是最佳选择，因为 value 是动态绑定的 -->
+      <!-- <t-dropdown-item options="{{tabsConfig[activeTab].sorters.options}}" default-value="{{tabsDataState[activeTab].sorterValue}}" bindchange="onSortChange" /> -->
+    </t-dropdown-menu>
+  </view>
+
+  <!-- 内容区域: 列表、加载状态都根据 activeTab 动态显示 -->
+  <view class="content-area">
+    <!-- 记录列表: wx:for 遍历当前激活 tab 的 recordList -->
+    <!-- wx:key 使用 item.id (已在 JS 中从 _id 映射过来) -->
+    <block wx:if="{{tabsDataState[activeTab] && tabsDataState[activeTab].recordList.length > 0}}">
+        <t-cell
+            wx:for="{{tabsDataState[activeTab].recordList}}"
+            wx:key="id"
+            title="{{item.title}}"
+            description="{{item.description}}"
+            note="{{item.note}}"
+            hover
+            />
+            <!-- t-cell 的 borderless="{{index === tabsDataState[activeTab].recordList.length - 1}}" 可以移除最后一条的边框 -->
+    </block>
+    <!-- 空状态提示 (可选) -->
+     <view class="empty-state" wx:elif="{{tabsDataState[activeTab] && !tabsDataState[activeTab].isLoadingMore && tabsDataState[activeTab].recordList.length === 0 && !tabsDataState[activeTab].hasMore}}">
+        <t-empty description="暂无记录"></t-empty>
+     </view>
+
+    <!-- 加载更多指示器: wx:if 绑定到当前激活 tab 的 isLoadingMore -->
+    <view wx:if="{{tabsDataState[activeTab] && tabsDataState[activeTab].isLoadingMore}}" class="loading-more">
+      <t-loading theme="circular" size="32rpx" text="加载中..." />
+    </view>
+    <!-- 没有更多数据提示: wx:if 绑定到当前激活 tab 的 hasMore 和 isLoadingMore -->
+    <view wx:if="{{tabsDataState[activeTab] && !tabsDataState[activeTab].hasMore && !tabsDataState[activeTab].isLoadingMore && tabsDataState[activeTab].recordList.length > 0}}" class="no-more">
+      没有更多了
+    </view>
+  </view>
+
+  <!-- FAB 按钮不变 -->
+  <t-fab wx:if="{{ !user_id }}" icon="add" bind:click="handleClick" text="记录" />
+</view>

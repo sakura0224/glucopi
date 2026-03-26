@@ -1,0 +1,117 @@
+<t-toast id="t-toast" />
+<t-navbar t-class-placeholder="t-navbar-placeholder" t-class-content="t-navbar-content" title="添加记录" t-class-title="nav-title" left-arrow />
+
+<view class="page addRecord">
+  <view class="addRecord__title"> {{encouragementText}} </view>
+
+  <!-- 1. 血糖 Section (Mandatory) -->
+  <view class="form-section">
+    <text class="addRecord__tips">血糖值录入 (必填)</text>
+    <t-input
+      label="血糖值"
+      type="digit"
+      placeholder="例如 10.0"
+      value="{{glucose}}"
+      suffix="mmol/L"
+      bindchange="onGlucoseChange"
+      clearable
+      style="margin-bottom: 16rpx;"
+    />
+    <text class="addRecord__tips">测量类型</text>
+    <t-radio-group value="{{tag}}" bindchange="onTagChange" borderless>
+      <t-radio value="fasting">空腹</t-radio>
+      <t-radio value="postprandial">餐后</t-radio>
+      <t-radio value="random">随机</t-radio>
+    </t-radio-group>
+  </view>
+
+  <!-- Divider -->
+  <t-divider />
+
+  <!-- 2. 胰岛素 Section (Optional) -->
+  <view class="form-section">
+    <text class="addRecord__tips">胰岛素录入 (选填)</text>
+    <t-input
+      label="剂量"
+      type="digit"
+      placeholder="例如 4"
+      value="{{dose}}"
+      suffix="U"
+      bindchange="onDoseChange"
+      clearable
+      style="margin-bottom: 16rpx;"
+    />
+    <!-- Show insulin type only if dose is entered -->
+    <block wx:if="{{dose}}">
+        <text class="addRecord__tips">胰岛素类型 <text style="color: #e54545;">(必选)</text></text>
+        <t-radio-group value="{{insulinType}}" bindchange="onInsulinTypeChange" borderless>
+        <t-radio value="basal">基础</t-radio>
+        <t-radio value="bolus">餐时</t-radio>
+        <t-radio value="mixed">预混</t-radio>
+        </t-radio-group>
+    </block>
+  </view>
+
+  <!-- Divider -->
+  <t-divider />
+
+  <!-- 3. 饮食 Section (Optional) -->
+  <view class="form-section">
+    <text class="addRecord__tips">饮食录入 (选填)</text>
+    <t-input
+      label="碳水"
+      type="digit"
+      placeholder="例如 50"
+      value="{{carbs}}"
+      suffix="克"
+      bindchange="onCarbsChange"
+      clearable
+      style="margin-bottom: 16rpx;"
+    />
+    <!-- Show meal type only if carbs are entered -->
+     <block wx:if="{{carbs}}">
+        <text class="addRecord__tips">餐次类型 <text style="color: #e54545;">(必选)</text></text>
+        <t-radio-group value="{{mealType}}" bindchange="onMealTypeChange" borderless>
+        <t-radio value="breakfast">早餐</t-radio>
+        <t-radio value="lunch">午餐</t-radio>
+        <t-radio value="dinner">晚餐</t-radio>
+        <t-radio value="snack">加餐</t-radio>
+        </t-radio-group>
+     </block>
+    <!-- Diet Description -->
+    <view style="margin-top: 16rpx;" wx:if="{{carbs}}">
+        <text class="addRecord__tips">食物描述 (选填)</text>
+        <t-textarea
+            placeholder="选填，记录具体吃了什么，例如：一碗米饭，炒青菜，鸡胸肉"
+            value="{{dietDescription}}"
+            bindchange="onDietDescriptionChange"
+            maxlength="200"
+            indicator
+        />
+    </view>
+  </view>
+
+  <!-- Divider -->
+  <t-divider />
+
+  <!-- 4. General Note Section (Optional) -->
+  <view class="form-section">
+    <text class="addRecord__tips">通用备注 (选填)</text>
+    <t-textarea
+      placeholder="选填，记录当时的感觉、运动情况或其他信息"
+      value="{{note}}"
+      bindchange="onNoteChange"
+      maxlength="200"
+      indicator
+    />
+  </view>
+
+  <!-- Submission Buttons -->
+  <view class="addRecord__button">
+    <t-button block size="large" theme="primary" bindtap="onSubmit" style="margin-bottom: 32rpx;">提交记录</t-button>
+    <t-button block size="large" theme="light" bindtap="onNavigate">返回</t-button>
+  </view>
+
+  <!-- Add some padding at the bottom -->
+  <view style="height: 60rpx;"></view>
+</view>

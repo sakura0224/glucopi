@@ -1,0 +1,32 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# WeChat Mini Program local/build artifacts
+miniprogram_npm/
+project.private.config.json
+.cloudbase/
+__MACOSX/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log

@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "patient-home": "patient-home/index",
+    "doctor-home": "doctor-home/index"
+  }
+}

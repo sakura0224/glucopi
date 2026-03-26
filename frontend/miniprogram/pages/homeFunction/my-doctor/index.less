@@ -1,0 +1,134 @@
+.container {
+  padding: 0;
+  /* t-cell 默认有内边距，这里容器不需要 */
+}
+
+.status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  /* 使状态居中 */
+  text-align: center;
+  padding: 20px;
+}
+
+.doctor-avatar {
+  width: 80rpx;
+  /* 根据实际需要调整头像大小 */
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+
+.doctor-info {
+  flex: 1;
+  /* 占据中间区域 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.doctor-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 4rpx;
+}
+
+.doctor-detail {
+  font-size: 24rpx;
+  color: #888;
+  /* 保持在一行显示，溢出省略 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500rpx;
+  /* 限制宽度避免挤压右侧图标 */
+}
+
+.chat-icon {
+  margin-left: 20rpx;
+  color: #0052d9;
+  /* TDesign 主题蓝 */
+  display: flex;
+  /* 使图标垂直居中 */
+  align-items: center;
+}
+
+.doctor-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.doctor-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  /* margin-bottom: 4rpx; */
+}
+
+.doctor-detail {
+  font-size: 24rpx;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500rpx;
+  /* 限制宽度 */
+}
+
+/* --- 添加状态标签样式 --- */
+.doctor-status {
+  font-size: 20rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 4rpx;
+  margin-top: 8rpx;
+  /* 与上面的文字拉开距离 */
+  align-self: flex-start;
+  /* 让标签靠左对齐 */
+}
+
+.pending-status {
+  color: #ff9900;
+  /* 警告黄色 */
+  background-color: #fff7e6;
+  /* 浅黄色背景 */
+  border: 1rpx solid #ffaa00;
+}
+
+.accepted-status {
+  color: #00a870;
+  /* 成功绿色 */
+  background-color: #e3f9f4;
+  /* 浅绿色背景 */
+  border: 1rpx solid #00a870;
+}
+
+/* --- 添加状态标签样式结束 --- */
+
+
+.chat-icon {
+  margin-left: 20rpx;
+  color: #0052d9;
+  /* TDesign 主题蓝 */
+  display: flex;
+  align-items: center;
+}
+
+.btn-wrapper {
+  height: 100%;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 120rpx;
+  height: 100%;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #e34d59;
+}

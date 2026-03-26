@@ -1,0 +1,16 @@
+<view class="page">
+  <t-navbar title="血糖趋势" left-arrow />
+
+  <!-- Tab 切换 -->
+  <t-tabs value="{{activeTab}}" bindchange="onTabChange" style="margin-bottom: 32rpx;">
+    <t-tab-panel value="day" label="日" />
+    <t-tab-panel value="week" label="周" />
+    <t-tab-panel value="month" label="月" />
+    <t-tab-panel value="6months" label="6个月" />
+    <t-tab-panel value="year" label="年" />
+  </t-tabs>
+
+  <!-- 图表区域 -->
+  <ec-canvas id="trendChart" canvas-id="trendChart" ec="{{ec}}" />
+
+</view>

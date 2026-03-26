@@ -1,0 +1,23 @@
+/* pages/my/profile/index.wxss */
+.container {
+  padding: 20px 20px; /* t-cell 默认有左右内边距，容器可以只加上下内边距或调整 */
+  border-radius: 48px;
+}
+
+.input {
+  border-radius: 2em;
+}
+
+/* Loading 覆盖层样式 */
+t-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+}

@@ -1,0 +1,43 @@
+<!-- components/patient-home/index.wxml -->
+<view class="home">
+
+  <!-- 顶部导航 -->
+  <t-navbar t-class-placeholder="t-navbar-placeholder" t-class-content="t-navbar-content" title="控糖派" t-class-title="nav-title" />
+
+  <!-- 公告栏 -->
+  <t-notice-bar visible="{{showGlucoseNotice}}" suffixIcon="close" bind:click="notice" class="notice-bar">
+    <view slot="content" class="inline">
+      今天尚未记录血糖，点击跳转
+    </view>
+  </t-notice-bar>
+
+  <!-- 轮播图 -->
+  <view class="banner">
+    <t-swiper current="{{current}}" autoplay="{{autoplay}}" duration="{{duration}}" interval="{{interval}}" list="{{swiperList}}" navigation="{{ { type: 'dots-bar' } }}" />
+  </view>
+
+  <!-- 功能区 -->
+  <text class="home__tips">主要功能</text>
+  <view class="block">
+    <t-grid column="2" theme="card" align="left" bind:click="click">
+      <t-grid-item text="每日记录" description="请不要松懈哦" layout="horizontal" icon="task-add" url="/pages/homeFunction/record/index" />
+      <t-grid-item text="我的医生" description="专家随手可达" layout="horizontal" icon="bifurcate" url="/pages/homeFunction/my-doctor/index" />
+    </t-grid>
+  </view>
+
+  <!-- 血糖专区 -->
+  <text class="home__tips">血糖专区</text>
+  <view class="block">
+    <t-grid column="2" theme="card" align="left" bind:click="click">
+      <t-grid-item text="血糖趋势" description="健康一目了然" layout="horizontal" icon="chart-line" url="/pages/homeFunction/trend/index" />
+      <t-grid-item text="血糖预测" description="AI精准预测" layout="horizontal" icon="system-sum" url="/pages/homeFunction/prediction/index" />
+    </t-grid>
+  </view>
+
+  <!-- 其他 -->
+  <text class="home__tips">其他</text>
+  <t-grid class="block" column="4" theme="card" bind:click="click">
+    <t-grid-item text="敬请期待" icon="time" url="" />
+  </t-grid>
+
+</view>

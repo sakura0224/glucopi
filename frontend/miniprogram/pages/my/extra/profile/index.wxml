@@ -1,0 +1,57 @@
+<t-toast id="t-toast" />
+<view class="container">
+  <t-navbar t-class-placeholder="t-navbar-placeholder" t-class-content="t-navbar-content" title="健康档案" t-class-title="nav-title" left-arrow />
+
+  <!-- 身高 -->
+  <t-cell title="身高" class="form-cell">
+    <view class="form-item-value" slot="right-icon">
+      <t-input t-class="cell-input" align="center" value="{{ profileData.height }}" placeholder="请输入身高" type="digit" bindchange="onInputChange" data-field="height" slot="right-icon" />
+      <text class="glucose-input-unit">cm</text>
+    </view>
+  </t-cell>
+
+  <!-- 体重 -->
+  <t-cell title="体重" class="form-cell">
+    <view class="form-item-value" slot="right-icon">
+      <t-input t-class="cell-input" align="center" value="{{ profileData.weight }}" placeholder="请输入体重" type="digit" bindchange="onInputChange" data-field="weight" slot="right-icon" />
+      <text class="glucose-input-unit">kg</text>
+    </view>
+  </t-cell>
+
+  <!-- 诊断日期 -->
+  <t-cell title="诊断日期" class="form-cell" bindtap="onOpenDatePicker">
+    <!-- 显示选中的日期文本 -->
+    <view class="form-item-value" slot="right-icon">
+      {{ profileData.diagnosed_at ? profileData.diagnosed_at : '请选择诊断日期' }}
+      <t-icon name="calendar" size="40rpx" class="calendar-icon"></t-icon>
+    </view>
+  </t-cell>
+  <!-- DateTimePicker 组件本身放在 WXML 底部或容器外，不影响布局 -->
+  <t-date-time-picker visible="{{ showDatePicker }}" value="{{ diagnosedDateValue }}" mode="date" bindchange="onDiagnosedDateChange" bindconfirm="onDiagnosedDateConfirm" bindcancel="onCloseDatePicker" />
+
+
+  <!-- 目标血糖范围 -->
+  <t-cell title="目标血糖" class="form-cell">
+    <!-- 将两个输入框和文本放在 right-icon slot -->
+    <view class="glucose-range-inputs" slot="right-icon">
+      <t-input t-class="cell-input" align="center" value="{{ profileData.target_glucose_min }}" placeholder="最低" type="digit" bindchange="onInputChange" data-field="target_glucose_min" class="glucose-input-half" />
+      <text class="glucose-input-separator">-</text>
+      <t-input t-class="cell-input" align="center" value="{{ profileData.target_glucose_max }}" placeholder="最高" type="digit" bindchange="onInputChange" data-field="target_glucose_max" class="glucose-input-half" />
+      <text class="glucose-input-unit">mg/dL</text>
+    </view>
+  </t-cell>
+
+  <!-- 用药计划 (TextArea 通常独立一行或在 Cell 中作为 description) -->
+  <!-- 使用 t-cell 作为容器，将 textarea 放在 description slot -->
+  <t-cell title="用药计划" class="form-cell-textarea">
+    <t-textarea t-class="cell-textarea" value="{{ profileData.medication_plan }}" placeholder="请输入当前用药计划描述" indicator="{{false}}" maxlength="-1" bindchange="onInputChange" data-field="medication_plan" slot="description" />
+  </t-cell>
+
+  <!-- 提交按钮 -->
+  <view class="button-group">
+    <t-button theme="primary" size="large" bindtap="onSubmit" block loading="{{ isSaving }}">保存</t-button>
+  </view>
+
+  <t-loading wx:if="{{ isLoading }}" text="加载中..." size="base"></t-loading>
+
+</view>

@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+sqlalchemy
+aiomysql
+motor
+python-dateutil
+pytz
+python-jose
+httpx
+openai
+numpy
+pandas
+torch

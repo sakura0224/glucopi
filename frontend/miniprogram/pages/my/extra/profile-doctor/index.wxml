@@ -1,0 +1,21 @@
+<t-toast id="t-toast" />
+<view class="container">
+  <t-navbar t-class-placeholder="t-navbar-placeholder" t-class-content="t-navbar-content" title="个人档案" t-class-title="nav-title" left-arrow />
+
+  <view class="input">
+
+    <t-input label="职称" value="{{ profileData.title }}" disabled />
+
+    <t-input label="科室" value="{{ profileData.department }}" disabled />
+
+    <t-input label="医院" value="{{ profileData.hospital }}" disabled />
+
+    <t-input label="领域" value="{{ profileData.specialization }}" disabled />
+
+    <t-input label="编号" value="{{ profileData.registration_number }}" disabled />
+    
+  </view>
+
+  <t-loading wx:if="{{ isLoading }}" text="加载中..." size="base"></t-loading>
+
+</view>

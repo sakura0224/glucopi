@@ -1,0 +1,14 @@
+{
+    "540": {"gender": 0, "age_mid": 30, "glucose_mean": 137.10, "glucose_std": 55.03},
+    "544": {"gender": 0, "age_mid": 50, "glucose_mean": 165.22, "glucose_std": 59.88},
+    "552": {"gender": 0, "age_mid": 30, "glucose_mean": 146.69, "glucose_std": 54.58},
+    "559": {"gender": 1, "age_mid": 50, "glucose_mean": 166.69, "glucose_std": 70.58},
+    "563": {"gender": 0, "age_mid": 50, "glucose_mean": 146.08, "glucose_std": 49.69},
+    "567": {"gender": 1, "age_mid": 30, "glucose_mean": 153.82, "glucose_std": 60.93},
+    "570": {"gender": 0, "age_mid": 50, "glucose_mean": 187.49, "glucose_std": 62.33},
+    "575": {"gender": 1, "age_mid": 50, "glucose_mean": 141.79, "glucose_std": 60.29},
+    "584": {"gender": 0, "age_mid": 50, "glucose_mean": 192.48, "glucose_std": 65.44},
+    "588": {"gender": 1, "age_mid": 50, "glucose_mean": 164.99, "glucose_std": 50.51},
+    "591": {"gender": 1, "age_mid": 50, "glucose_mean": 156.02, "glucose_std": 58.04},
+    "596": {"gender": 0, "age_mid": 70, "glucose_mean": 147.19, "glucose_std": 49.30}
+}

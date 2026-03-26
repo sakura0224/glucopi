@@ -1,0 +1,54 @@
+<t-toast id="t-toast" />
+
+<view class="container">
+  <t-navbar t-class-placeholder="t-navbar-placeholder" t-class-content="t-navbar-content" title="我的医生" t-class-title="nav-title" left-arrow />
+
+  <!-- 加载状态 -->
+  <block wx:if="{{ isLoading }}">
+    <view class="status-container">
+      <t-loading theme="dots" text="加载中..." layout="vertical" size="64rpx"></t-loading>
+    </view>
+  </block>
+
+  <!-- 空状态 -->
+  <block wx:elif="{{ isEmpty }}">
+    <view class="status-container">
+      <t-result theme="warning" title="您还没有绑定的医生" />
+    </view>
+  </block>
+
+  <!-- 错误状态 (可选，简单处理) -->
+  <block wx:elif="{{ errorMsg }}">
+    <view class="status-container">
+      <text>{{ errorMsg }}</text>
+      <t-button size="small" bindtap="fetchBoundDoctors">重试</t-button>
+    </view>
+  </block>
+
+  <!-- 医生列表 -->
+  <block wx:else>
+    <block wx:for="{{ doctorList }}" wx:key="id" wx:for-item="item">
+      <t-swipe-cell>
+
+        <t-cell bindtap="handleDoctorTap" data-doctor="{{ item }}">
+          <view slot="left-icon" class="doctor-avatar">
+            <t-avatar class="avatar-example" shape="round" image="{{ item.avatar_url || 'http://cdn.ayane.top/avatar/default.png' }}" />
+          </view>
+          <view slot="title" class="doctor-name">{{ item.nickname }}</view>
+          <view slot="description" class="doctor-detail">{{ item.title }} | {{ item.department }} | {{ item.hospital }}</view>
+          <view slot="right-icon" class="chat-icon">
+            <t-icon wx:if="{{ item.status === 'pending'}}" name="pending" size="40rpx"></t-icon>
+            <t-icon wx:else name="chat" size="40rpx"></t-icon>
+          </view>
+        </t-cell>
+
+        <!-- 滑出右侧按钮 -->
+        <view wx:if="{{ item.status === 'pending' }}" slot="right" class="btn delete-btn" catch:tap="cancelInvitation" data-binding-id="{{ item.binding_id }}">取消</view>
+        <view wx:elif="{{ item.status === 'accepted' }}" slot="right" class="btn delete-btn" catch:tap="deactivateBinding" data-binding-id="{{ item.binding_id }}">解除</view>
+      </t-swipe-cell>
+    </block>
+  </block>
+
+  <!-- 固定底部的添加医生按钮 (可选，也可以放在列表为空的状态里) -->
+  <t-fab icon="add" bind:click="navigateToAddDoctor" text="添加医生" />
+</view>
