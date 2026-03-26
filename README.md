@@ -61,6 +61,8 @@ glucopi/
 └─ docs/                   # screenshots and documentation assets
 ```
 
+More project documentation is available in [docs/](./docs/), including architecture notes, API overview, deployment notes, and thesis materials.
+
 ## Tech Stack
 
 - Frontend: WeChat Mini Program, JavaScript, LESS, TDesign Mini Program

@@ -61,6 +61,8 @@ glucopi/
 └─ docs/                   # 截图与文档资源
 ```
 
+更详细的项目文档见 [docs/](./docs/)，其中包含架构说明、接口概览、部署说明和论文材料索引。
+
 ## 技术栈
 
 - 前端：微信小程序、JavaScript、LESS、TDesign Mini Program
